@@ -5,6 +5,7 @@
 
 #include "CppMirror.h"
 #include "ReflMethod.h"
+#include "FunctorMetaData.hpp"
 #include "MethodReflection.h"
 
 namespace rtl 
@@ -23,14 +24,14 @@ namespace rtl
 		m_ownerReflClass = &pOwnerClass;
 	}
 
-	inline const FunctorTypeIdIndexMap& ReflMethod::getFunctorTypeIdIndexMap() const
+	inline const FunctorMetaDataMap& ReflMethod::getFunctorTypeIdIndexMap() const
 	{
-		return m_functorTypeIdIndexMap;
+		return m_functorMetaDataMap;
 	}
 
-	inline const FunctorTypeIdIndexMap& ReflMethod::getConstFunctorTypeIdIndexMap() const
+	inline const FunctorMetaDataMap& ReflMethod::getConstFunctorTypeIdIndexMap() const
 	{
-		return m_constFunctorTypeIdIndexMap;
+		return m_constFunctorMetaDataMap;
 	}
 
 	template<class _objTy>
@@ -72,9 +73,10 @@ namespace rtl
 				return	((static_cast<_classTy*>(safeUp_cast(pTarget, pTargetTypeId)))->*pFunctor)(params...);
 			}
 		};
-		const unsigned functorTypeId = MethodReflection<_retTy, _args...>::getFunctorTypeId();
 		const unsigned functorIndex = MethodReflection<_retTy, _args...>::addLambdaWrappedFunctor<typeQ::MUTABLE>(m_instanceCount, functor);
-		return ReflMethod(functorTypeId, functorIndex);
+		const FunctorMetaData mthdMetaData = FunctorMetaData::build<_retTy, _args...>(m_instanceCount, FunctorSignature<_args...>::TypeId, functorIndex);
+
+		return ReflMethod(MethodReflection<_retTy, _args...>::TypeId, mthdMetaData);
 	}
 
 	template<class _classTy, class _retTy, class... _args>
@@ -92,9 +94,44 @@ namespace rtl
 				return	((static_cast<const _classTy*>(safeUp_cast(const_cast<void*>(pTarget), pTargetTypeId)))->*pFunctor)(params...);
 			}
 		};
-		const unsigned functorTypeId = MethodReflection<_retTy, _args...>::getFunctorTypeId();
+		
 		const unsigned functorIndex = MethodReflection<_retTy, _args...>::addLambdaWrappedFunctor<typeQ::CONST>(m_instanceCount, functor);
-		return ReflMethod(functorTypeId, functorIndex, true);
+		const FunctorMetaData mthdMetaData = FunctorMetaData::build<_retTy, _args...>(m_instanceCount, FunctorSignature<_args...>::TypeId, functorIndex);
+
+		return ReflMethod(MethodReflection<_retTy, _args...>::TypeId, mthdMetaData, true);
+	}
+
+	template<class _retTy, class..._args>
+	inline const bool ReflMethod::isSignature() const
+	{
+		const unsigned methodId = MethodReflection<_retTy, _args...>::TypeId;
+		if (m_functorMetaDataMap.find(methodId) == m_functorMetaDataMap.end() && 
+			m_constFunctorMetaDataMap.find(methodId) == m_constFunctorMetaDataMap.end())
+		{
+			return false;
+		}
+		return true;
+	}
+
+	template<class _retTy>
+	inline const bool ReflMethod::isReturnType() const
+	{
+		const unsigned returnId = ReflTypeID::get<_retTy>();
+		for (const auto& itr : m_functorMetaDataMap)
+		{
+			if (itr.second.getReturnTypeId() == returnId)
+			{
+				return true;
+			}
+		}
+		for (const auto& itr : m_constFunctorMetaDataMap)
+		{
+			if (itr.second.getReturnTypeId() == returnId)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }
 

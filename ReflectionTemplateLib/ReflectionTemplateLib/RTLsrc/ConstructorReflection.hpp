@@ -8,16 +8,10 @@
 namespace rtl {
 
 	template<class _retTy, class..._args>
-	const unsigned ConstructorReflection<_retTy, _args...>::m_constructorTypeId = CtorIdCreater::m_ctorIdCounter++;
+	const unsigned ConstructorReflection<_retTy, _args...>::TypeId = CtorIdCreater::m_ctorIdCounter++;
 
 	template<class _retTy, class..._args>
 	std::vector< std::pair< unsigned, CtorFunctor<_retTy, _args...>>> ConstructorReflection<_retTy, _args...>::m_ctorFunctors;
-
-	template<class _retTy, class ..._args>
-	inline const unsigned ConstructorReflection<_retTy, _args...>::getConstructorTypeId()
-	{
-		return m_constructorTypeId;
-	}
 
 	template<class _retTy, class..._args>
 	template<class _lambdaTy>

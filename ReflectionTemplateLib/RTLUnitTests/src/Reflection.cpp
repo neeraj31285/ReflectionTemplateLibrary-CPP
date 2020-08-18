@@ -1,17 +1,21 @@
 
 #include "ReflectionTemplateBuilder.h"
-
 #include "Book.h"
-#include "Reflection.h"
 
 using namespace rtl;
 using namespace std;
 
-const CppMirror<>& Reflection::system()
+const CppMirror<>& Reflection()
 {
     static CppMirror<> cppMirror = CppMirror<>(
-    {
-        add<Book, ctor::VOID, ctor::COPY, ctorArgs<const string&>, 
+    {   
+        add<Date, ctor::VOID, ctor::COPY, ctorArgs<const std::string&>>("Date")->add(
+        {
+            //Operator overloading refinment in progress.
+            { "operator==", add<typeQ::CONST>(&Date::operator==) }
+        }),
+
+        add<Book, ctor::VOID, ctor::COPY, ctorArgs<const string&>,
             ctorArgs<double, string>, ctorArgs<Date&, string>>("Book")->add(
         {
             { "getTitle", add(&Book::getTitle) },
@@ -30,6 +34,5 @@ const CppMirror<>& Reflection::system()
             { "setPublishedOn", args<int, int, int>::add(&Book::setPublishedOn) },
         })
     });
-
     return cppMirror;
 }

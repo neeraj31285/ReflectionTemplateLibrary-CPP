@@ -3,12 +3,10 @@
 #include <iostream>
 
 #include "src/TestFact.h"
-#include "src/MethodCallTests.h"
-#include "src/ConstructorTests.h"
-#include "src/InheritanceTests.h"
+#include "src/UnitTestTypes.h"
 
 template<class _testsType>
-void runRTLUnitTests()
+void execute()
 {
 	for (const auto performTest : _testsType::UNIT_TEST_CASES)
 	{
@@ -23,7 +21,8 @@ void runRTLUnitTests()
 
 int main()
 {
-	runRTLUnitTests< ConstructorTests >();
-	runRTLUnitTests< MethodCallTests >();
-	runRTLUnitTests< InheritanceTests >();
+	execute<ConstructorTests>();
+	execute<MethodCallTests>();
+	execute<InheritanceTests>();
+	execute<OperatorOverloadingTest>();
 }

@@ -52,6 +52,20 @@ namespace rtl {
 		return m_reflFunctions.at(pFuncName);
 	}
 
+	template<ctor _ctorTy>
+	inline const bool ReflClass::isCtorSignature() const
+	{
+		const unsigned ctorTypeId = ConstructorReflection<void*, void*, ctorCOPY*>::TypeId;
+		return (m_ctorFunctorTable.find(ctorTypeId) != m_ctorFunctorTable.end());
+	}
+
+	template<class ..._args>
+	inline const bool ReflClass::isCtorSignature() const
+	{
+		const unsigned ctorTypeId = ConstructorReflection<void*, _args...>::TypeId;
+		return (m_ctorFunctorTable.find(ctorTypeId) != m_ctorFunctorTable.end());
+	}
+
 	template<class _objTy, class..._args>
 	inline ReflObject<_objTy> ReflClass::instance(_args...params) const
 	{
@@ -60,14 +74,14 @@ namespace rtl {
 
 	template<ctor _ctorTy, class _objTy>
 	inline ReflObject<_objTy> ReflClass::instance(const ReflObject<_objTy>& pSrcObj, 
-						      const sfinae_ctorT<_ctorTy, ctor::COPY>* p_null) const
+												  const sfinae_ctorT<_ctorTy, ctor::COPY>* p_null) const
 	{
 		return ReflObject<_objTy>(m_reflClassId, construct<_objTy>(pSrcObj.get(), &ctorCOPY()), m_deleteFunctor);
 	}
 
 	template<ctor _ctorTy, class _objTy>
 	inline ReflObject<_objTy> ReflClass::instance(const ReflObject<const _objTy>& pSrcObj, 
-						      const sfinae_ctorT<_ctorTy, ctor::COPY>* p_null) const
+												  const sfinae_ctorT<_ctorTy, ctor::COPY>* p_null) const
 	{
 		return ReflObject<_objTy>(m_reflClassId, construct<_objTy>(const_cast<_objTy*>(pSrcObj.get()), &ctorCOPY()), m_deleteFunctor);
 	}
@@ -80,14 +94,14 @@ namespace rtl {
 
 	template<ctor _ctorTy, class _objTy>
 	inline ReflObject<const _objTy> ReflClass::instanceConst(const ReflObject<_objTy>& pSrcObj, 
-								 const sfinae_ctorT<_ctorTy, ctor::COPY>* p_null) const
+															 const sfinae_ctorT<_ctorTy, ctor::COPY>* p_null) const
 	{
 		return ReflObject<const _objTy>(m_reflClassId, construct<_objTy>(pSrcObj.get(), &ctorCOPY()), m_deleteFunctor);
 	}
 
 	template<ctor _ctorTy, class _objTy>
 	inline ReflObject<const _objTy> ReflClass::instanceConst(const ReflObject<const _objTy>& pSrcObj, 
-								 const sfinae_ctorT<_ctorTy, ctor::COPY>* p_null) const
+															 const sfinae_ctorT<_ctorTy, ctor::COPY>* p_null) const
 	{
 		return ReflObject<const _objTy>(m_reflClassId, construct<_objTy>(const_cast<_objTy*>(pSrcObj.get()), &ctorCOPY()), m_deleteFunctor);
 	}
@@ -97,7 +111,7 @@ namespace rtl {
 	{
 		static_assert(!std::is_pointer<_objTy>::value, "newInstance<_objTy>() : template argument \"_objTy\" should not be pointer");
 
-		const unsigned ctorTypeId = ConstructorReflection<void*, _args...>::getConstructorTypeId();
+		const unsigned ctorTypeId = ConstructorReflection<void*, _args...>::TypeId;
 		auto indexItr = m_ctorFunctorTable.find(ctorTypeId);
 		const bool isInvocationValid = (indexItr != m_ctorFunctorTable.end());
 		assert(isInvocationValid && "Bad constructor call exception.. abort!");

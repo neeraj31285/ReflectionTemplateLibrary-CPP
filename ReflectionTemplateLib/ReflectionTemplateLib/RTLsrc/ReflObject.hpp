@@ -30,10 +30,10 @@ namespace rtl
 	inline ReflObject<_objTy> ReflObject<_objTy>::create(std::unique_ptr<_ptrTy> pSrcPtr, const unsigned pReflId)
 	{
 		return ReflObject(pReflId, pSrcPtr.release(),
-			[](const void* pTarget)->void
-			{
-				delete static_cast<const _ptrTy*>(pTarget);
-			});
+		[](const void* pTarget)->void
+		{
+			delete static_cast<const _ptrTy*>(pTarget);
+		});
 	}
 
 	template<class _objTy>
@@ -41,10 +41,10 @@ namespace rtl
 	inline ReflObject<_objTy> ReflObject<_objTy>::create(std::unique_ptr<_ptrTy>& pSrcPtr, const unsigned pReflId)
 	{
 		return ReflObject(pReflId, pSrcPtr.release(),
-			[](const void* pTarget)->void
-			{
-				delete static_cast<const _ptrTy*>(pTarget);
-			});
+		[](const void* pTarget)->void
+		{
+			delete static_cast<const _ptrTy*>(pTarget);
+		});
 	}
 
 	template<class _objTy>

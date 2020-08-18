@@ -23,13 +23,13 @@ namespace rtl
 	};
 
 	class ReflClass;
+	class FunctorMetaData;
 
 	template<class..._args>
 	struct ctorArgs {};
 
 	using ReflTypeId = unsigned int;
 	using ReflMethodId = unsigned int;
-	using FunctorIndex = unsigned int;
 	using FunctorTypeId = unsigned int;
 
 	using ctorVOID = ctorArgs<>;
@@ -42,7 +42,7 @@ namespace rtl
 	using InheritanceCastFunctor = void* (*)(void*, const unsigned);
 	using ReflectedClassMap = std::unordered_map<std::string, const ReflClass* const>;
 	using ReflectedClassIdMap = std::unordered_map<unsigned int, const ReflClass* const>;
-	using FunctorTypeIdIndexMap = std::unordered_map<FunctorTypeId, std::pair<ReflMethodId, FunctorIndex>>;
+	using FunctorMetaDataMap = std::unordered_map<FunctorTypeId, FunctorMetaData>;
 
 	template<typeQ _funcTx, typeQ _funcTy>
 	using sfinae_typeQT = typename std::enable_if<(_funcTx == _funcTy)>::type;

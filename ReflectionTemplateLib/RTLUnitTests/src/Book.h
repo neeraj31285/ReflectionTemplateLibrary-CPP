@@ -10,6 +10,7 @@ struct Date
 	Date();
 	Date(const std::string& pDateStr);
 	const bool operator==(const Date& pOther) const;
+	std::string getState() const;
 };
 
 

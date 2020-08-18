@@ -10,6 +10,7 @@ using namespace std;
 namespace rtl {
 
 	unsigned ReflClass::instanceCount = 0;
+	unsigned CtorIdCreater::m_ctorIdCounter = 0;
 
 	ReflClass::ReflClass(const char* pTypeName)
 	: m_reflClassId(instanceCount++)

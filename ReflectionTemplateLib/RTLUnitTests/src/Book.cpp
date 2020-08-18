@@ -1,26 +1,11 @@
 
 #include <vector>
 #include <iostream>
-#include <sstream>
 
 #include "Book.h"
+#include "TestConstants.h"
 
 using namespace std;
-
-const string thisStr(Book* pThis) 
-{
-	std::stringstream ss;
-	ss << static_cast<const void*>(pThis);
-	return string("__this[") + ss.str() + string("](") + string(typeid(pThis).name())+ string(")");
-}
-
-
-const string thisStr(const Book* pThis)
-{
-	std::stringstream ss;
-	ss << static_cast<const void*>(pThis);
-	return string("__this[") + ss.str() + string("](") + string(typeid(pThis).name()) + string(")");
-}
 
 Date::Date()
 	: m_day(0)
@@ -53,6 +38,15 @@ Date::Date(const string& pDateStr)
 const bool Date::operator==(const Date& pOther) const
 {
 	return (m_day == pOther.m_day && m_month == pOther.m_month && m_year == pOther.m_year);
+}
+
+std::string Date::getState() const
+{
+	return STATE_BEGIN +
+		   STATE_FIELD("date", to_string(m_day)) +
+		   STATE_FIELD("month", to_string(m_month)) +
+		   STATE_FIELD("year", to_string(m_year)) +
+		   STATE_END;
 }
 
 Book::~Book()
@@ -177,28 +171,28 @@ string Book::getPublishedOn() const
 std::string Book::getState()
 {
 	const string dateStr = to_string(m_date.m_day) + "/" + to_string(m_date.m_month) + "/" + to_string(m_date.m_year);
-	const string info = string("\n") + thisStr(this) + string(" : {\n|") +
-						string("\n|  Price: \"") + to_string(m_price) + string("\",") +
-						string("\n|  Title: \"") + m_title + string("\",") +
-						string("\n|  Author: \"") + m_author + string("\",") +
-						string("\n|  PublishedOn: \"") + dateStr + string("\",") +
-						string("\n|  [ctor]: { ") + m_ctorSignature + string(" },") +
-						string("\n|  [method]: { ") + m_fuctorSignature + string(" }") +
-						string("\n}");
+	const string info = STATE_BEGIN +
+						STATE_FIELD("Price", to_string(m_price)) +
+						STATE_FIELD("Title", m_title) +
+						STATE_FIELD("Author", m_author) +
+						STATE_FIELD("PublishedOn", dateStr) +
+						STATE_FIELD_cb("[ctor]", m_ctorSignature) +
+						STATE_FIELD_cb("[method]", m_fuctorSignature) +
+						STATE_END;
 	return info;
 }
 
 std::string Book::getState() const
 {
 	const string dateStr = to_string(m_date.m_day) + "/" + to_string(m_date.m_month) + "/" + to_string(m_date.m_year);
-	const string info = string("\n") + thisStr(this) + string(" : {\n|") +
-						string("\n|  Price: \"") + to_string(m_price) + string("\",") +
-						string("\n|  Title: \"") + m_title + string("\",") +
-						string("\n|  Author: \"") + m_author + string("\",") +
-						string("\n|  PublishedOn: \"") + dateStr + string("\",") +
-						string("\n|  [ctor]: { ") + m_ctorSignature + string(" },") +
-						string("\n|  [method]: { ") + m_fuctorSignature + string(" }") +
-						string("\n}");
+	const string info = STATE_BEGIN +
+						STATE_FIELD("Price", to_string(m_price)) +
+						STATE_FIELD("Title", m_title) +
+						STATE_FIELD("Author", m_author) +
+						STATE_FIELD("PublishedOn", dateStr) +
+						STATE_FIELD_cb("[ctor]", m_ctorSignature) +
+						STATE_FIELD_cb("[method]", m_fuctorSignature) +
+						STATE_END;
 	return info;
 }
 

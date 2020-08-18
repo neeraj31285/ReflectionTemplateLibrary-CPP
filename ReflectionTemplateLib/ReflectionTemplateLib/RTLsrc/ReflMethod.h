@@ -11,7 +11,8 @@
 namespace rtl {
 	
 	class ReflClass;
-	
+	class FunctorMetaData;
+
 	class ReflMethod 
 	{
 		static ReflMethodId m_instanceCount;
@@ -19,15 +20,15 @@ namespace rtl {
 		mutable bool m_isAmbiguous;
 		mutable bool m_hasConstOverload;
 		mutable const ReflClass* m_ownerReflClass;
-		mutable FunctorTypeIdIndexMap m_functorTypeIdIndexMap;
-		mutable FunctorTypeIdIndexMap m_constFunctorTypeIdIndexMap;
+		mutable FunctorMetaDataMap m_functorMetaDataMap;
+		mutable FunctorMetaDataMap m_constFunctorMetaDataMap;
 
 		void setOwnerClass(const ReflClass& pOwnerClass) const;
 		void mergeOverloads(const ReflMethod& pSrcFunction) const;
 		void mergeInheritedOverloads(const ReflMethod& pSrcFunction, const bool pIsOwnerOtherBase) const;
 
-		ReflMethod(const FunctorTypeId pFunctorTypeId, const FunctorIndex pFunctorIndex);
-		ReflMethod(const FunctorTypeId pFunctorTypeId, const FunctorIndex pFunctorIndex, const bool pIsConstMethod);
+		ReflMethod(const FunctorTypeId pFunctorTypeId, const FunctorMetaData& pMetaData);
+		ReflMethod(const FunctorTypeId pFunctorTypeId, const FunctorMetaData& pMetaData, const bool pIsConstMethod);
 
 	public: friend ReflClass;
 
@@ -35,8 +36,14 @@ namespace rtl {
 
 		const bool isAmbiguous() const;
 		const bool hasConstOverload() const;
-		const FunctorTypeIdIndexMap& getFunctorTypeIdIndexMap() const;
-		const FunctorTypeIdIndexMap& getConstFunctorTypeIdIndexMap() const;
+		const FunctorMetaDataMap& getFunctorTypeIdIndexMap() const;
+		const FunctorMetaDataMap& getConstFunctorTypeIdIndexMap() const;
+
+		template<class _retTy, class..._args>
+		const bool isSignature() const;
+
+		template<class _retTy>
+		const bool isReturnType() const;
 
 		template<class _classTy, class _retTy, class... _args>
 		static const ReflMethod init(_retTy(_classTy::* pFunctor)(_args...));

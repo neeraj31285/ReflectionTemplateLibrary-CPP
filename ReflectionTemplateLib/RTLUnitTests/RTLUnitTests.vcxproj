@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)ReflectionTemplateLib\RTLsrc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ReflectionTemplateLib\RTLsrc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,6 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)ReflectionTemplateLib\RTLsrc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)ReflectionTemplateLib\RTLsrc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)ReflectionTemplateLib\RTLsrc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,18 +148,16 @@
     <ClCompile Include="Src\ConstructorTests.cpp" />
     <ClCompile Include="Src\InheritanceTests.cpp" />
     <ClCompile Include="Src\MethodCallTests.cpp" />
+    <ClCompile Include="src\OperatorOverloadingTest.cpp" />
     <ClCompile Include="Src\Reflection.cpp" />
     <ClCompile Include="Src\TestFact.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Book.h" />
-    <ClInclude Include="Src\ConstructorTests.h" />
-    <ClInclude Include="Src\InheritanceTests.h" />
-    <ClInclude Include="Src\MethodCallTests.h" />
-    <ClInclude Include="Src\Reflection.h" />
     <ClInclude Include="Src\TestConstants.h" />
     <ClInclude Include="Src\TestFact.h" />
     <ClInclude Include="Src\TestFact.hpp" />
+    <ClInclude Include="src\UnitTestTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReflectionTemplateLib\ReflectionTemplateLib.vcxproj">

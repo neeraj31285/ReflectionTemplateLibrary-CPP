@@ -13,6 +13,26 @@ constexpr void TestFact::ASSERT_STATES_EQUAL(std::unique_ptr<_type>& pPtrI, rtl:
 }
 
 template<class _type, class _reflTy>
+inline constexpr void TestFact::ASSERT_STATES_EQUAL(const _type& pObj, rtl::ReflObject<_reflTy>& pPtr) const
+{
+	assert(m_return == m_reflReturn && "Return values are not same");
+	assert(pObj == *(static_cast<_type*>(pPtr.get())) && "Objects state are not same");
+}
+
+constexpr void TestFact::ASSERT_SIGNATURE(const bool pAssert) const
+{
+	assert(pAssert && "Wrong method signature or return type selected");
+}
+
+template<class _type, class _reflTy>
+inline void TestFact::RESULT_DESCRIPTION(_type& pObj, rtl::ReflObject<_reflTy>& pPtr) const
+{
+	std::unique_ptr<_type> objPtr(&pObj);
+	RESULT_DESCRIPTION(objPtr, pPtr);
+	objPtr.release();
+}
+
+template<class _type, class _reflTy>
 void TestFact::RESULT_DESCRIPTION(std::unique_ptr<_type>& pPtrI, rtl::ReflObject<_reflTy>& pPtrII) const {
 
 	std::string bufa, bufb, bufc;

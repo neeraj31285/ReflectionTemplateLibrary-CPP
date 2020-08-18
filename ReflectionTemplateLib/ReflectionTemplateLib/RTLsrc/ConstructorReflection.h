@@ -20,13 +20,11 @@ namespace rtl {
 		friend ReflClass;
 		friend ReflClassBuilder;
 
-		static const unsigned m_constructorTypeId;
-
+		static const unsigned TypeId;
 		static std::vector< std::pair< unsigned, CtorFunctor<_retTy, _args...>>> m_ctorFunctors;
 
 		ConstructorReflection() = delete;
 
-		static const unsigned getConstructorTypeId();
 		static void* invoke(const unsigned pReflClassId, const unsigned pCtorIndex, _args... params);
 
 		template<class _lambdaTy>

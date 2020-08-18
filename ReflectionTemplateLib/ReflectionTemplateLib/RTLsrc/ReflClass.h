@@ -56,6 +56,12 @@ namespace rtl {
 		const std::string& getClassName() const;
 		const std::vector<const ReflClass*>& getBaseReflClasses() const;
 
+		template<class..._args>
+		const bool isCtorSignature() const;
+
+		template<ctor _ctorTy>
+		const bool isCtorSignature() const;
+
 		template<class _objTy = void, class..._args>
 		ReflObject<_objTy> instance(_args...params) const;
 

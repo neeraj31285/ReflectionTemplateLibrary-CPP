@@ -39,9 +39,9 @@ namespace rtl
 	}
 
 	template<class _retType, class ..._args>
-	inline _retType ReflExecuter<typeQ::MUTABLE>::invoke(_args ...params) const
+	inline _retType ReflExecuter<typeQ::MUTABLE>::invoke(_args...params) const
 	{
-		const unsigned functorTypeId = MethodReflection<_retType, _args...>::getFunctorTypeId();
+		const unsigned functorTypeId = MethodReflection<_retType, _args...>::TypeId;
 		const auto& functorMap = m_reflMethod.getFunctorTypeIdIndexMap();
 		auto indexItr = functorMap.find(functorTypeId);
 		if (indexItr == functorMap.end())

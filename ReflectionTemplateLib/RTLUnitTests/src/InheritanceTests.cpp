@@ -1,8 +1,9 @@
 
-#include "TestFact.hpp"
-#include "InheritanceTests.h"
+#include <vector>
+
+#include "UnitTestTypes.h"
 
 using namespace std;
 using namespace rtl;
 
-const vector<void(*)(const TestFact&)> InheritanceTests::UNIT_TEST_CASES = { /*In Progress*/ };
+const vector<TestFunctor> InheritanceTests::UNIT_TEST_CASES = { /*In Progress*/ };

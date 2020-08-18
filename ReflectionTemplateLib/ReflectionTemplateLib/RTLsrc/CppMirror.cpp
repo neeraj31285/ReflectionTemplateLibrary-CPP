@@ -3,15 +3,10 @@
 #include <algorithm>
 
 #include "CppMirror.h"
-#include "MethodReflection.h"
-#include "ConstructorReflection.h"
 
 using namespace std;
 
 namespace rtl {
-
-	unsigned CtorIdCreater::m_ctorIdCounter = 0;
-	unsigned MethodIdCreater::m_methodIdCounter = 0;
 
 	const unsigned CppMirror<>::getClassId(const std::string& pClassName) const
 	{
