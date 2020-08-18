@@ -24,5 +24,5 @@ int main()
 	execute<ConstructorTests>();
 	execute<MethodCallTests>();
 	execute<InheritanceTests>();
-	execute<OperatorOverloadingTest>();
+	execute<OperatorOverloadTests>();
 }

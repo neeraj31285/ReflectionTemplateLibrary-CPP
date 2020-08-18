@@ -18,7 +18,7 @@ struct InheritanceTests
 	static const std::vector<TestFunctor> UNIT_TEST_CASES; 
 };
 
-struct OperatorOverloadingTest 
+struct OperatorOverloadTests 
 { 
 	static const std::vector<TestFunctor> UNIT_TEST_CASES; 
 };

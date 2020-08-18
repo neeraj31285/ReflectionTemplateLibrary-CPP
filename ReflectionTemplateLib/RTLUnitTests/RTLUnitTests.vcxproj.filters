@@ -36,7 +36,7 @@
     <ClCompile Include="Src\TestFact.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OperatorOverloadingTest.cpp">
+    <ClCompile Include="src\OperatorOverloadTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

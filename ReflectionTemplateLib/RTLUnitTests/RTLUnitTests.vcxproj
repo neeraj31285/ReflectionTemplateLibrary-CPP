@@ -148,7 +148,7 @@
     <ClCompile Include="Src\ConstructorTests.cpp" />
     <ClCompile Include="Src\InheritanceTests.cpp" />
     <ClCompile Include="Src\MethodCallTests.cpp" />
-    <ClCompile Include="src\OperatorOverloadingTest.cpp" />
+    <ClCompile Include="src\OperatorOverloadTests.cpp" />
     <ClCompile Include="Src\Reflection.cpp" />
     <ClCompile Include="Src\TestFact.cpp" />
   </ItemGroup>

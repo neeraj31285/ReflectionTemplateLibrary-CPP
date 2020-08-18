@@ -12,7 +12,7 @@
 #define STATE_FIELD_cb(_fieldStr, _field) std::string("\n|  ") + _fieldStr + std::string(": {") + _field + std::string("},")
 #define STATE_END std::string("\n}")
 
-struct TestFact;
+class TestFact;
 
 using TestFunctor = void(*)(const TestFact&);
 
